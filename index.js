@@ -32,10 +32,10 @@ class HexaViewer {
     }
 
     createAsciiColumn(offset, byte) {
-        const hexaCol = document.createElement('TD');
-        hexaCol.setAttribute('data-offset', offset);
-        hexaCol.append(HexaViewer.bytesToAscii(byte));
-        return hexaCol;
+        const acsiiCol = document.createElement('TD');
+        acsiiCol.setAttribute('data-offset', offset);
+        acsiiCol.append(HexaViewer.bytesToAscii(byte));
+        return acsiiCol;
     }
 
     /**
