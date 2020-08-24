@@ -1,5 +1,7 @@
-
 class HexaViewer {
+    
+    static SPACE = 32;
+    static DEL = 127;
 
     /**
      * @param {string} id Viewer DOM id, to ease CSS styling
@@ -10,13 +12,13 @@ class HexaViewer {
     constructor(id, content, base64, mime) {
         this.table = Object.assign(document.createElement('TABLE'), {
             id,
-            style, {
+            style: {
                 fontFamily: 'Source Code Pro,Menlo,Consolas,PT Mono,Liberation Mono,monospace',
                 fontSize: 14,
                 lineHeight: 20,
                 whiteSpace: 'pre'
             }
-        );
+        });
         this.table.setAttribute('class', 'hexa-viewer');
         this.table.addEventListener('click', ({ target }) => this.focus(target.dataset && target.dataset.offset));
         if (content) {
@@ -129,8 +131,8 @@ class HexaViewer {
      */
     static bytesToAscii(byte) {
         // use '.' for "Non Printable" characters & Non Visible characters (exception for the SPACE)
-        // see https://web.itu.edu.tr/sgunduz/courses/mikroisl/ascii.html
-        return (byte < 32 || byte === 127 || byte === 160 || byte === 173)
+        // see https://theasciicode.com.ar/
+        return (byte < HexaViewer.SPACE || byte === HexaViewer.DEL)
             ? '.'
             : String.fromCharCode(byte);
     }
