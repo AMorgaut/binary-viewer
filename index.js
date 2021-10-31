@@ -1,24 +1,24 @@
 class HexaViewer {
     
+    static TABLE_STYLE = {
+        fontFamily: 'Source Code Pro,Menlo,Consolas,PT Mono,Liberation Mono,monospace',
+        fontSize: 14,
+        lineHeight: 20,
+        whiteSpace: 'pre'
+    };
     static SPACE = 32;
     static DEL = 127;
 
     /**
      * @param {string} id Viewer DOM id, to ease CSS styling
-     * @param {File|Blob|string} [content] binary content to display, may be a base64 encoded string
-     * @param {boolean} [base64] flag to declare the content as base64 encoded
-     * @param {string} [mime] Binary content media type. default to application/octet-stream
+     * @param {object} [options] Optional properties
+     * @param {boolean} [options.type] default to `{fontFamily: 'Source Code Pro,Menlo,Consolas,PT Mono,Liberation Mono,monospace', fontSize: 14, lineHeight: 20, whiteSpace: 'pre'}`
+     * @param {File|Blob|string} [options.content] binary content to display, may be a base64 encoded string
+     * @param {boolean} [options.base64] flag to declare the content as base64 encoded
+     * @param {string} [options.mime] Binary content media type. default to `application/octet-stream`
      **/
-    constructor(id, content, base64, mime) {
-        this.table = Object.assign(document.createElement('TABLE'), {
-            id,
-            style: {
-                fontFamily: 'Source Code Pro,Menlo,Consolas,PT Mono,Liberation Mono,monospace',
-                fontSize: 14,
-                lineHeight: 20,
-                whiteSpace: 'pre'
-            }
-        });
+    constructor(id, { style = HexaViewer.TABLE_STYLE, content, base64, mime } = {}) {
+        this.table = Object.assign(document.createElement('TABLE'), { id, style });
         this.table.setAttribute('class', 'hexa-viewer');
         this.table.addEventListener('click', ({ target }) => this.focus(target.dataset && target.dataset.offset));
         if (content) {
@@ -34,7 +34,7 @@ class HexaViewer {
      * @param {string} [mime] Binary content media type. default to application/octet-stream
      * @return {Promise}
      **/
-    async load(rawData, base64, mime = 'application/octet-stream') {
+    async load(rawData, base64 = false, mime = 'application/octet-stream') {
         const blob = base64
             ? await (await fetch(`data:${mime};base64,${rawData}`)).blob()
             : rawData;
