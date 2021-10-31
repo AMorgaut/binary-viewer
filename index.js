@@ -1,5 +1,11 @@
 class HexaViewer {
     
+    /**
+     * Table style used by default by the constructor
+     *
+     * Default to `{fontFamily: 'Source Code Pro,Menlo,Consolas,PT Mono,Liberation Mono,monospace', fontSize: 14, lineHeight: 20, whiteSpace: 'pre'}`
+     * @type {object}
+     */
     static TABLE_STYLE = {
         fontFamily: 'Source Code Pro,Menlo,Consolas,PT Mono,Liberation Mono,monospace',
         fontSize: 14,
@@ -12,7 +18,7 @@ class HexaViewer {
     /**
      * @param {string} id Viewer DOM id, to ease CSS styling
      * @param {object} [options] Optional properties
-     * @param {boolean} [options.type] default to `{fontFamily: 'Source Code Pro,Menlo,Consolas,PT Mono,Liberation Mono,monospace', fontSize: 14, lineHeight: 20, whiteSpace: 'pre'}`
+     * @param {object} [options.style] default to `{fontFamily: 'Source Code Pro,Menlo,Consolas,PT Mono,Liberation Mono,monospace', fontSize: 14, lineHeight: 20, whiteSpace: 'pre'}`
      * @param {File|Blob|string} [options.content] binary content to display, may be a base64 encoded string
      * @param {boolean} [options.base64] flag to declare the content as base64 encoded
      * @param {string} [options.mime] Binary content media type. default to `application/octet-stream`
