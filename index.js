@@ -8,24 +8,27 @@ class HexaViewer {
      */
     static TABLE_STYLE = {
         fontFamily: 'Source Code Pro,Menlo,Consolas,PT Mono,Liberation Mono,monospace',
-        fontSize: 14,
-        lineHeight: 20,
-        whiteSpace: 'pre'
+        fontSize: '14px',
+        lineHeight: '20px',
+        whiteSpace: 'pre',
+        border: '1px'
     };
+    static TABLE_CLASS = 'hexa-viewer';
     static SPACE = 32;
     static DEL = 127;
 
     /**
      * @param {string} id Viewer DOM id, to ease CSS styling
      * @param {object} [options] Optional properties
+     * @param {string} [options.className] Table CSS class name (default to "hexa-viewer")
      * @param {object} [options.style] default to `{fontFamily: 'Source Code Pro,Menlo,Consolas,PT Mono,Liberation Mono,monospace', fontSize: 14, lineHeight: 20, whiteSpace: 'pre'}`
      * @param {File|Blob|string} [options.content] binary content to display, may be a base64 encoded string
      * @param {boolean} [options.base64] flag to declare the content as base64 encoded
      * @param {string} [options.mime] Binary content media type. default to `application/octet-stream`
      **/
-    constructor(id, { style = HexaViewer.TABLE_STYLE, content, base64, mime } = {}) {
-        this.table = Object.assign(document.createElement('TABLE'), { id, style });
-        this.table.setAttribute('class', 'hexa-viewer');
+    constructor(id, { className = HexaViewer.TABLE_CLASS, style = HexaViewer.TABLE_STYLE, content, base64, mime } = {}) {
+        this.table = Object.assign(document.createElement('TABLE'), { id, className });
+        Object.assign(this.table.style, style);
         this.table.addEventListener('click', ({ target }) => this.focus(target.dataset && target.dataset.offset));
         if (content) {
             this.load(content, base64, mime);
@@ -55,8 +58,16 @@ class HexaViewer {
     /**
      * Focus an offset content (both the Hexa and ASCII cells are focused)
      **/
-    focus() {
-        // TODO
+    focus(offset) {
+        if (this.focused) {
+            for (const td of this.focused) {
+                td.style.backgroundColor = 'inherit';
+            }
+        }
+        this.focused = this.table.querySelectorAll(`TR TD[data-offset="${offset}"]`);
+        for (const td of this.focused) {
+            td.style.backgroundColor = 'cyan';
+        }
     }
 
     /**
@@ -80,7 +91,7 @@ class HexaViewer {
             const newLine = !(offset % 16);
             if (newLine) {
                 if (currentLine) {
-                    currentLine.append(...hexaLine, ...asciiLine);
+                    currentLine.append(this.sep(), ...hexaLine, this.sep(), ...asciiLine);
                     this.table.append(currentLine);
                     hexaLine.length = 0;
                     asciiLine.length = 0;
@@ -109,6 +120,16 @@ class HexaViewer {
 
     /**
      * @private
+     * @return {HTMLTableCellElement}
+     */
+    sep() {
+        const separator = document.createElement('TD');
+        separator.style.backgroundColor = 'black';
+        return separator;
+    }
+
+    /**
+     * @private
      * @param {number} offset
      * @param {number} byte
      * @param {boolean} [ascii]
@@ -117,6 +138,9 @@ class HexaViewer {
     createByteCell(offset, byte, ascii = false) {
         const byteCol = document.createElement('TD');
         byteCol.setAttribute('data-offset', String(offset));
+        const hexaOffset = offset.toString(16).padStart(8, '0');
+        const decimalOffset = String(offset);
+        byteCol.setAttribute('title', `${hexaOffset} | ${decimalOffset}`);
         const format = ascii ? HexaViewer.bytesToAscii : HexaViewer.bytesToHexa;
         byteCol.append(format(byte));
         return byteCol;
@@ -137,9 +161,9 @@ class HexaViewer {
      */
     static bytesToAscii(byte) {
         // use '.' for "Non Printable" characters & Non Visible characters (exception for the SPACE)
+        // Meaning all characters from 00 to 31 + 127
         // see https://theasciicode.com.ar/
         return (byte < HexaViewer.SPACE || byte === HexaViewer.DEL)
             ? '.'
             : String.fromCharCode(byte);
     }
-}
