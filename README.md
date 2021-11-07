@@ -3,15 +3,38 @@
 
 Allow to display binary content using hex-editor like interface
 
+![image](https://user-images.githubusercontent.com/49318/140663548-87d637eb-f6fd-4228-99ce-e216e0f1c325.png)
+
 ## Usage
 
-```javascript
-const viewer = new HexaViewer('my-viewer');
-document.body.append(viewer);
+Example with an HTML5 file `<input>`
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <input type="file" id=myFile>
+    <hr>
+  </body>
+</html>
+```
 
-// anytime we want to display a new content
-viewer.reset();
-viewer.load(someBlobOrBase64);
+```javascript 
+var viewer;
+
+myFile.addEventListener('change', function (event) {
+
+  if (!viewer) {
+    viewer = new HexaViewer('my-viewer');
+    document.body.append(viewer.table);
+  }
+
+  const [file] = event.target.files;
+  if (!file) return;
+
+  viewer.reset();
+  viewer.load(file);    
+
+});
 ```
 
 ## HexaViewer API Doc
