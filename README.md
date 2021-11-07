@@ -1,4 +1,6 @@
 # binary-viewer
+[![CodeQL](https://github.com/AMorgaut/binary-viewer/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/AMorgaut/binary-viewer/actions/workflows/codeql-analysis.yml)
+
 Allow to display binary content using hex-editor like interface
 
 ## Usage
