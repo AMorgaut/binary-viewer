@@ -22,7 +22,6 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js"
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
     "eslint": "^8.2.0"
