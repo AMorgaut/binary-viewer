@@ -1,5 +1,5 @@
 # binary-viewer
-[![CodeQL](https://github.com/AMorgaut/binary-viewer/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/AMorgaut/binary-viewer/actions/workflows/codeql-analysis.yml)
+[![CodeQL](https://github.com/AMorgaut/binary-viewer/actions/workflows/lint.yml/badge.svg)](https://github.com/AMorgaut/binary-viewer/actions/workflows/lint.yml)
 
 Allow to display binary content using hex-editor like interface
 
