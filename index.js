@@ -1,4 +1,4 @@
-class HexaViewer {
+export class HexaViewer {
     
     /**
      * Table style used by default by the constructor
