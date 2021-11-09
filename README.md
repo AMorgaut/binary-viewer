@@ -7,7 +7,22 @@ Allow to display binary content using hex-editor like interface
 
 ## Usage
 
-Example with an HTML5 file `<input>`
+### Example with a fetched response
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+  </body>
+</html>
+```
+
+```javascript 
+const content = await (await fetch(dataApiUrl)).blob(); 
+const viewer = new HexaViewer('my-viewer', { content });
+document.body.append(viewer.table);
+```
+
+### Example with an HTML5 file `<input>`
 ```html
 <!DOCTYPE html>
 <html>
@@ -36,6 +51,7 @@ myFile.addEventListener('change', function (event) {
 
 });
 ```
+
 
 ## HexaViewer API Doc
 **Kind**: global class  
