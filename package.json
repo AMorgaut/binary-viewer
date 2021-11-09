@@ -2,14 +2,6 @@
   "name": "binary-viewer",
   "version": "1.0.0",
   "description": "Allow to display binary content using hex-editor like interface",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AMorgaut/binary-viewer.git"
-  },
   "keywords": [
     "viewer",
     "hexadecimal",
@@ -17,10 +9,22 @@
     "hexeditor",
     "html"
   ],
+  "homepage": "https://github.com/AMorgaut/binary-viewer#readme",
   "author": "Alexandre Morgaut",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/AMorgaut/binary-viewer/issues"
   },
-  "homepage": "https://github.com/AMorgaut/binary-viewer#readme"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AMorgaut/binary-viewer.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "eslint": "^8.2.0"
+  }
 }
