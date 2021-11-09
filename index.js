@@ -167,3 +167,4 @@ class HexaViewer {
             ? '.'
             : String.fromCharCode(byte);
     }
+}
