@@ -88,19 +88,21 @@ class HexaViewer {
         const asciiLine = [];
         let currentLine;
         for (let offset = 0, size = data.length; offset < size; offset += 1) {
-            const newLine = !(offset % 16);
-            if (newLine) {
-                if (currentLine) {
-                    currentLine.append(this.sep(), ...hexaLine, this.sep(), ...asciiLine);
-                    this.table.append(currentLine);
-                    hexaLine.length = 0;
-                    asciiLine.length = 0;
+            setTimeout(() => {
+                const newLine = !(offset % 16);
+                if (newLine) {
+                    if (currentLine) {
+                        currentLine.append(this.sep(), ...hexaLine, this.sep(), ...asciiLine);
+                        this.table.append(currentLine)
+                        hexaLine.length = 0;
+                        asciiLine.length = 0;
+                    }
+                    currentLine = this.createLine(offset.toString(16).padStart(8, '0'));
                 }
-                currentLine = this.createLine(offset.toString(16).padStart(8, '0'));
-            }
-            const byte = data.charCodeAt(offset);
-            hexaLine.push(this.createByteCell(offset, byte));
-            asciiLine.push(this.createByteCell(offset, byte, true));
+                const byte = data.charCodeAt(offset);
+                hexaLine.push(this.createByteCell(offset, byte));
+                asciiLine.push(this.createByteCell(offset, byte, true));
+            }, 0);
         }
     }
 
